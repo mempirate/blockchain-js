@@ -1,0 +1,27 @@
+{
+  "name": "blockchainjs",
+  "version": "1.0.0",
+  "description": "A simple blockchain in node.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "node blockchain.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasbostoen/blockchain-js.git"
+  },
+  "keywords": [
+    "blockchain",
+    "javascript",
+    "nodejs"
+  ],
+  "author": "Jonas Bostoen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonasbostoen/blockchain-js/issues"
+  },
+  "homepage": "https://github.com/jonasbostoen/blockchain-js#readme",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  }
+}
