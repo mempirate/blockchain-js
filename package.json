@@ -4,7 +4,7 @@
   "description": "A simple blockchain in node.js",
   "main": "app.js",
   "scripts": {
-    "start": "node blockchain.js"
+    "start": "nodemon blockchain.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/jonasbostoen/blockchain-js#readme",
   "dependencies": {
-    "crypto-js": "^3.1.9-1"
+    "body-parser": "^1.18.3",
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.3"
   }
 }

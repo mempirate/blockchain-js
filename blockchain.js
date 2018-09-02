@@ -1,8 +1,12 @@
 const Block = require('./block');
+const express = require('express');
+const bodyParser = require('body-parser');
+
 
 class Blockchain {
   constructor() {
     this.chain = [this.createGenesisBlock()];
+    this.difficulty = 5;
   }
 
   createGenesisBlock() {
@@ -16,8 +20,8 @@ class Blockchain {
 
   addNewBlock(newBlock) {
     newBlock.previousHash = this.getLastBlock().hash;
-    newBlock.hash = newBlock.calculateHash();
-    //newBlock.index = this.chain.length;
+    newBlock.index = this.getLastBlock().index + 1;
+    newBlock.mineBlock(this.difficulty);
     this.chain.push(newBlock);
   }
 
@@ -39,25 +43,51 @@ class Blockchain {
     }
 }
 
+
 const PolyChain = new Blockchain();
 
-// Test if the chain works
-//PolyChain.addNewBlock(new Block({ amount: 50 }));
-PolyChain.addNewBlock(new Block({ amount: 50 }, 1));
-PolyChain.addNewBlock(new Block({ amount: 100 }, 2));
+console.log(JSON.stringify(PolyChain, null, 2));
+
+// ================ //
+//      SERVER      //
+// ================ //
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
-// let jsonChain = JSON.stringify(PolyChain, null, 2);
-
-//PolyChain.chain[1].data = { amount: 5000 }
-//PolyChain.chain[1].hash = PolyChain.chain[1].calculateHash();
-
-// View the full chain
-PolyChain.chain.forEach((block, i) => {
-  console.log(`\nBlock ${i + 1}: \n======================`);
-  console.log(block);
-  console.log('\n')
+app.post('/transactions/new', (req, res) => {
+  const data = req.body;
+  console.log(`Block data: ${data}`);
+  PolyChain.addNewBlock(new Block(data));
+  if (PolyChain.isChainValid()) {
+    res.write(updateChain());
+    res.write('\n\n$ Chain validity --- VALID');
+    res.status(200).end();
+  } else {
+    res.send('\n\n$ Chain validity --- CORRUPTED');
+  }
 });
 
-// Check if the chain is valid
-console.log(`Is Blockchain valid? ----> ${PolyChain.isChainValid()}`)
+app.get('/chain', (req, res) => {
+  // Check if the chain is valid
+  let validity = PolyChain.isChainValid();
+  if (validity) {
+    res.write(updateChain());
+    res.write('\n\n$ Chain validity --- VALID');
+    res.status(200).end();
+  } else {
+    res.status(200).send('\n\n$ Chain validity --- CORRUPTED');
+  }
+});
+
+function updateChain() {
+  return(JSON.stringify(PolyChain, null, 2));
+}
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Blockchain listening on port ${port}`);
+});

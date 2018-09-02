@@ -1,0 +1,12 @@
+block = {
+  "data": {
+          "sender": "jonas",
+          "receiver": "louie",
+          "amount": 100
+  },
+  "index": 21,
+  "timestamp": "Sun Sep 02 2018 18:38:29 GMT+0200 (CEST)",
+  "previousHash": "c50c04e1c3bff02c6742787c6712ca6f66555795fa547ebdf5af5846317e0b19",
+  "nonce": 364014,
+  "hash": "0000e567b17cd0f65a41d7562d0795c2e01171584f4ff8d2668b4343bd1f0ec5"
+}
