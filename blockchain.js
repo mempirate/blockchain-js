@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 class Blockchain {
   constructor() {
     this.chain = [this.createGenesisBlock()];
-    this.difficulty = 5;
+    this.difficulty = 4;
   }
 
   createGenesisBlock() {
@@ -46,7 +46,9 @@ class Blockchain {
 
 const PolyChain = new Blockchain();
 
-console.log(JSON.stringify(PolyChain, null, 2));
+// Seeding blockchain
+PolyChain.addNewBlock(new Block({sender: "Polycode", receiver: "Youtube", message: "Whatsup"}));
+PolyChain.addNewBlock(new Block({sender: "Polycode", receiver: "Youtube", message: "Jonas here"}));
 
 // ================ //
 //      SERVER      //
@@ -56,10 +58,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.post('/transactions/new', (req, res) => {
   const data = req.body;
-  console.log(`Block data: ${data}`);
+
   PolyChain.addNewBlock(new Block(data));
   if (PolyChain.isChainValid()) {
     res.write(updateChain());
@@ -71,7 +72,6 @@ app.post('/transactions/new', (req, res) => {
 });
 
 app.get('/chain', (req, res) => {
-  // Check if the chain is valid
   let validity = PolyChain.isChainValid();
   if (validity) {
     res.write(updateChain());
@@ -83,7 +83,7 @@ app.get('/chain', (req, res) => {
 });
 
 function updateChain() {
-  return(JSON.stringify(PolyChain, null, 2));
+  return JSON.stringify(PolyChain, null, 2);
 }
 
 const port = process.env.PORT || 3000;
