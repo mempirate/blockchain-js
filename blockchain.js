@@ -30,12 +30,12 @@ class Blockchain {
     for (let i = 0; i < chain.length; i++) {
 
       if (chain[i].hash !== chain[i].calculateHash()) {
-        console.log(`Block -- ${i} -- corrupted`);
+        console.log(`❌  Block -- ${i} -- corrupted`);
         return false;
       }
 
       if (i > 0 && chain[i].previousHash !== chain[i - 1].hash) {
-        console.log(`Block -- ${i - 1} -- corrupted`);
+        console.log(`❌  Block -- ${i - 1} -- corrupted`);
         return false;
       }
     }
