@@ -6,7 +6,7 @@ class Block {
   constructor(data, index, timestamp = String(new Date()), previousHash = '') {
     this.data = data;
     this.index = index;
-    this.timestamp = timestamp;
+    this.timestamp = timestamp.slice(0, 24);
     this.previousHash = previousHash;
     this.nonce = 0;
 

@@ -2,7 +2,7 @@ const { SHA256 } = require('crypto-js');
 
 const difficulty = 5;
 let nonce = 0;
-let hash = SHA256("Youtube").toString();
+let hash = "0";
 
 const mineBlock = () => {
   while (hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')) {
